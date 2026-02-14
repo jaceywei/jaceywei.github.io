@@ -1,0 +1,11 @@
+进入
+wsl -d Ubuntu-24.04
+
+进入网站 + 启动服务
+cd ~/jaceywei.github.io
+bundle exec jekyll serve -l -H localhost
+
+然后访问http://localhost:4000/
+
+源网站
+https://academicpages.github.io/

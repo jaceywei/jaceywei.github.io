@@ -11,27 +11,36 @@ A list of all the posts and pages found on the site. For you robots out there, t
 
 <h2>Pages</h2>
 {% for post in site.pages %}
-  {% include archive-single.html %}
+  {% if post.url and post.url != '' %}
+    {% include archive-single.html %}
+  {% endif %}
 {% endfor %}
 
 <h2>Posts</h2>
 {% for post in site.posts %}
-  {% include archive-single.html %}
-{% endfor %}
-
-{% capture written_label %}'None'{% endcapture %}
-
-{% for collection in site.collections %}
-{% unless collection.output == false or collection.label == "posts" %}
-  {% capture label %}{{ collection.label }}{% endcapture %}
-  {% if label != written_label %}
-  <h2>{{ label }}</h2>
-  {% capture written_label %}{{ label }}{% endcapture %}
+  {% if post.url and post.url != '' %}
+    {% include archive-single.html %}
   {% endif %}
-{% endunless %}
-{% for post in collection.docs %}
-  {% unless collection.output == false or collection.label == "posts" %}
-  {% include archive-single.html %}
-  {% endunless %}
 {% endfor %}
+
+{% comment %}Iterate through collections, but only show those with at least one valid document{% endcomment %}
+{% for collection in site.collections %}
+  {% unless collection.output == false or collection.label == "posts" %}
+    {% assign has_valid_docs = false %}
+    {% for doc in collection.docs %}
+      {% if doc.url and doc.url != '' %}
+        {% assign has_valid_docs = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    {% if has_valid_docs %}
+      <h2>{{ collection.label }}</h2>
+      {% for doc in collection.docs %}
+        {% if doc.url and doc.url != '' %}
+          {% include archive-single.html %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endunless %}
 {% endfor %}
