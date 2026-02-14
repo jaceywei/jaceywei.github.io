@@ -1,10 +1,9 @@
 ---
 layout: archive
 title: "Publications"
-permalink: /publication
+permalink: /publication/
 author_profile: true
-redirect_from: 
-    - /publications/
+redirect_from:
 ---
 
 You can also find my articles on my [Google Scholar profile](https://scholar.google.com/).
